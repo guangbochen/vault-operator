@@ -180,14 +180,10 @@ func vaultContainer(v *api.VaultService) v1.Container {
 		}},
 		LivenessProbe: &v1.Probe{
 			Handler: v1.Handler{
-				Exec: &v1.ExecAction{
-					Command: []string{
-						"curl",
-						"--connect-timeout", "5",
-						"--max-time", "10",
-						"-k", "-s",
-						fmt.Sprintf("https://localhost:%d/v1/sys/health", VaultClientPort),
-					},
+				HTTPGet: &v1.HTTPGetAction{
+					Path:   "/v1/sys/health",
+					Port:   intstr.FromInt(VaultClientPort),
+					Scheme: v1.URISchemeHTTPS,
 				},
 			},
 			InitialDelaySeconds: 10,
