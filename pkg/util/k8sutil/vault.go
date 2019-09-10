@@ -107,6 +107,10 @@ func DeployEtcdCluster(etcdCRCli etcdCRClient.Interface, v *api.VaultService) er
 	if v.Spec.Pod != nil {
 		etcdCluster.Spec.Pod.Resources = v.Spec.Pod.Resources
 	}
+	if v.Spec.EtcdCluster != (&etcdCRAPI.ClusterSpec{}) {
+		etcdCluster.Spec.Repository = v.Spec.EtcdCluster.Repository
+		etcdCluster.Spec.Version = v.Spec.EtcdCluster.Version
+	}
 	AddOwnerRefToObject(etcdCluster, AsOwner(v))
 	_, err := etcdCRCli.EtcdV1beta2().EtcdClusters(v.Namespace).Create(etcdCluster)
 	if err != nil {

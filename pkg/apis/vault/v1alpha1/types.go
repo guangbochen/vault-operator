@@ -17,6 +17,7 @@ package v1alpha1
 import (
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	etcdCRAPI "github.com/coreos/etcd-operator/pkg/apis/etcd/v1beta2"
 )
 
 const (
@@ -73,6 +74,9 @@ type VaultServiceSpec struct {
 
 	// TLS policy of vault nodes
 	TLS *TLSPolicy `json:"TLS,omitempty"`
+
+	// etcd operator cluster spec
+	EtcdCluster *etcdCRAPI.ClusterSpec `json:"etcdCluster,omitempty`
 }
 
 // PodPolicy defines the policy for pods owned by vault operator.
